@@ -38,9 +38,11 @@ class CreateHamburger {
 
 class Hamburger extends CreateHamburger {
     removeTopping(topping) {                    // Убрать добавку }
-        self.hamburgerToppings.forEach(toppingItem, toppingIndex => {
-            if (toppingsItem[topping]) delete hamburgerToppings[toppingIndex]
-        });
+        self.hamburgerToppings.forEach((itemTopping, indexTopping) => {
+            if (Object.keys(itemTopping) == topping) {
+                hamburgerToppings.splice(indexTopping, 1);
+            }
+        })
     };
 
     getToppings() {                            // Получить список добавок }
@@ -143,6 +145,8 @@ CheezeBureger.chooseBurgerSize('маленький')
 CheezeBureger.addStuffing('сыр')
 CheezeBureger.addStuffing('салат')
 CheezeBureger.addTopping('майонез')
+CheezeBureger.addTopping('приправа')
+CheezeBureger.removeTopping('приправа')
 // CheezeBureger.stuffingPrice()
 // CheezeBureger.getStuffing()
 // CheezeBureger.getToppings()
