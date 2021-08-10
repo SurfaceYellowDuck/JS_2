@@ -1,0 +1,21 @@
+.goods-list{
+    display: flex;
+    justify-content:space-around ;
+}
+
+.catalog-goods-item{
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+.basket-goods-item{
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+.good-price{
+    text-align: right;
+}
+.cart-button{
+    float: right;
+}
