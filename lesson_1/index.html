@@ -3,30 +3,38 @@
 
 <head>
     <title>eShop</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js.js"></script>
-    <script src="gamburgers.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <button class="cart-button" type="button">Корзина</button>
-    </header>
-    <main>
-        <div class="goods-list">
-            <div class="catalog-goods-items"></div>
-        </div>
-        <div class="basket">
-            <h1>Корзина</h1>
-            <div class="basket-items">
-                <div class="basket-goods-items"></div>
+    <div id="app">
+        <input type="text" v-model="name" />
+        <p v-if='name.length > 0'>Hi, my name is {{ upperCaseName }}</p>
+        <ul>
+            <li>{{ name }}</li>
+        </ul>
+        <header>
+            <button class="cart-button" type="button">Корзина</button>
+        </header>
+        <main>
+            <div class="goods-list">
+                <div class="catalog-goods-items"></div>
             </div>
-            <div class="basket-info">
-                <div class="info-basket"></div>
+            <div class="basket">
+                <h1>Корзина</h1>
+                <div class="basket-items">
+                    <div class="basket-goods-items"></div>
+                </div>
+                <div class="basket-info">
+                    <div class="info-basket"></div>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js.js"></script>
+<script src="gamburgers.js"></script>
 
 </html>

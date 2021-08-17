@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <input type="text" class="goods-search" v-model='searchLine'>
+            <p>{{searchLine}}</p>
+            <button class="search-button" type="button" @click="clickHandler">Искать</button>
+            <button class="cart-button" type="button" @click="basketClickHandlerOpen">Корзина</button>
+            <button class="cart-button" type="button" @click="basketClickHandlerClose">Закрыть корзину</button>
+        </header>
+        <main>
+            <div class="goods-list">
+                <div class="goods-item" v-if="filteredGoods.length == 0" v-for="good in goods">
+                    <p>{{ good.product_name }}</p>
+                    <p>{{ good.price }}</p>
+                    <button>Добавить</button>
+                </div>
+                <div class="search">
+                    <div class="search-not-found" v-if="filteredGoods.length == 0">
+                        <p>Список товаров пуст</p>
+                    </div>
+                    <div class="search-item" v-if="filteredGoods.length != 0" v-for="item in filteredGoods">
+                        <p class="">{{ item.product_name }}</p>
+                        <p>{{ item.price }}</p>
+                        <button>Добавить</button>
+                    </div>
+                </div>
+
+                <!-- <div class="goods-item" v-if="filteredGoods.length == 0 && goods.length==0">
+                    <p>Список товаров пуст</p>
+                </div> -->
+            </div>
+            <div class="basket" v-if='isVisibleCart==1 && goods.length !=0'>
+                <h1>Корзина</h1>
+                <div class="basket-goods-item" v-if='isVisibleCart==1 && goods.length !=0' v-for="good in goods">
+                    <h1>Корзина</h1>
+                    <p>{{ good.product_name }}</p>
+                    <p>{{ good.price }}</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>eShop</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <input type="text" class="goods-search" v-model='searchLine'>
+            <p>{{searchLine}}</p>
+            <button class="search-button" type="button" @click="clickHandler">Искать</button>
+            <button class="cart-button" type="button">Корзина</button>
+        </header>
+        <main>
+            <div class="goods-list">
+                <div class="goods-item" v-if="filteredGoods.length == 0" v-for="good in goods">
+                    <p>{{ good.product_name }}</p>
+                    <p>{{ good.price }}</p>
+                </div>
+                <div class="search-item" v-for="item in filteredGoods">
+                    <p class="good-price">{{ item.product_name }}</p>
+                    <p>{{ item.price }}</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html> -->
