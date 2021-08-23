@@ -77,12 +77,12 @@ class BasketList {
         document.querySelector('.basket-goods-items').innerHTML = listHtml;
     }
 
-    TotalQuantity() {
+    _totalQuantity() {
         this.basketList.forEach(item => {
             this.totalQuantity += item.quantity
         })
     }
-    TotalCost() {
+    _totalCost() {
         this.basketList.forEach(item => {
             this.totalCost += item.price * item.quantity
         })
@@ -90,8 +90,8 @@ class BasketList {
     renderBasketInfo() {
         this.totalCost = 0
         this.totalQuantity = 0
-        this.TotalQuantity()
-        this.TotalCost()
+        this._totalQuantity()
+        this._totalCost()
         document.querySelector('.info-basket').innerHTML = '';
         document.querySelector('.info-basket').insertAdjacentHTML('beforeend', `<div class='info-basket'>В корзине ${this.totalQuantity} товаров на сумму ${this.totalCost} руб</div>`)
     }
