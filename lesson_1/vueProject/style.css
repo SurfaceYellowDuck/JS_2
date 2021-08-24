@@ -23,6 +23,27 @@
 /* .good-price{
     text-align: right;
 } */
-.cart-button{
-    float: right;
+
+}
+.basket-item{
+    display: flex;
+    justify-items: left;
+}
+
+.basket-list{
+    padding: 10px;
+    display: flex;
+    justify-content:end ;
+    flex-flow: column;
+}
+
+.basket-item{
+    
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+
+.basket-delete-button{
+    justify-self: right;
 }
