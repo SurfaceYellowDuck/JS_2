@@ -6,29 +6,42 @@ Vue.component('goods-list', {
         v-for="good in goods" 
         :good="good" 
         :key="good.product_name"
+        :getRequest="makeGETRequest"
         @addToCart="addToCart">
         </goods-item>
       </div>
     `,
     methods: {
-        addToCart(data) {
-            for (el in this.basket) {
-                if (this.basket[el].product_name == data.product_name) {
-                    this.basket[el].quantity += 1
-                    console.log(this.basket[el].quantity)
-                    return
-                }
-            }
-            data.quantity = 1
-            this.basket.push(data)
-            console.log(this.basket)
+        // addToCart(data) {
+        //     for (el in this.basket) {
+        //         if (this.basket[el].product_name == data.product_name) {
+        //             this.basket[el].quantity += 1
+        //             console.log(this.basket[el].quantity)
+        //             return
+        //         }
+        //     }
+        //     data.quantity = 1
+        //     this.basket.push(data)
+        //     console.log(this.basket)
 
-        }
-    }
+        // },
+        async addToCart(data) {
+            return await fetch('/addToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data })
+            })
+        },
+
+    },
+
+
 })
 
 Vue.component('goods-item', {
-    props: ['good'],
+    props: ['good', 'getRequest'],
     template:
         `
       <div class="goods-item" >
@@ -48,7 +61,7 @@ Vue.component('goods-item', {
 });
 
 Vue.component('basket-list', {
-    props: ['goods', 'basket'],
+    props: ['goods', 'basket', 'makeGETRequest'],
     template: `
       <div class="basket-list">
         <h3>Корзина</h3>
@@ -75,7 +88,7 @@ Vue.component('basket-list', {
 })
 
 Vue.component('basket-item', {
-    props: ['good'],
+    props: ['good', 'makeGetRequest'],
     template: `
       <div class="basket-item">
         <h3>{{ good.product_name }}</h3>
@@ -124,7 +137,6 @@ Vue.component('goods-finder', {
         <input v-model="searchLine">
         
         <button @click="find(searchLine)">Найти</button>
-        <item-found :searchLine='searchLine'></item-found>
         <div class='goods-list' v-for='item in filteredGoods'></div>
         <found-item v-for='item in filteredGoods' :item='item'></found-item>
       </div>
@@ -168,11 +180,36 @@ const app = new Vue({
 
             xhr.open('GET', url, true);
             xhr.send();
+        },
+        makePOSTRequest(url, data, callback) {
+            let xhr;
+
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    callback(xhr.responseText);
+                }
+            }
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+            xhr.send(data);
         }
     },
     mounted() {
-        this.makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
+        this.makeGETRequest(`/catalogData`, (goods) => {
             this.goods = JSON.parse(goods);
+            // this.filteredGoods = goods;
+            console.log(this.goods)
+        });
+        this.makeGETRequest(`/cartData`, (goods) => {
+            this.basket = JSON.parse(goods);
             // this.filteredGoods = goods;
             console.log(this.goods)
         });
