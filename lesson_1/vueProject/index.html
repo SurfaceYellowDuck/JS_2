@@ -12,10 +12,11 @@
 <body>
     <main>
         <div id='app'>
-            <goods-list :goods="goods" :basket='basket'></goods-list>
+            <goods-list :goods="goods" :basket="basket">
+            </goods-list>
             <!-- <goods-item></goods-item> -->
             <goods-finder :goods='goods' :searchLine="searchLine"></goods-finder>
-            <basket-list :goods='goods' :basket='basket' :getRequest="makeGETRequest"></basket-list>
+            <basket-list :goods='goods' :basket='basket'></basket-list>
             <!-- <basket-item></basket-item> -->
         </div>
 

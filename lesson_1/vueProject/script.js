@@ -6,33 +6,31 @@ Vue.component('goods-list', {
         v-for="good in goods" 
         :good="good" 
         :key="good.product_name"
-        :getRequest="makeGETRequest"
         @addToCart="addToCart">
         </goods-item>
       </div>
     `,
     methods: {
-        // addToCart(data) {
-        //     for (el in this.basket) {
-        //         if (this.basket[el].product_name == data.product_name) {
-        //             this.basket[el].quantity += 1
-        //             console.log(this.basket[el].quantity)
-        //             return
-        //         }
-        //     }
-        //     data.quantity = 1
-        //     this.basket.push(data)
-        //     console.log(this.basket)
+        _addToCart(data) {
+            for (el in this.basket) {
+                if (this.basket[el].product_name == data.product_name) {
+                    this.basket[el].quantity += 1
+                    return
+                }
+            }
+            data.quantity = 1
+            this.basket.push(data)
 
-        // },
-        async addToCart(data) {
-            return await fetch('/addToCart', {
+        },
+        addToCart(data) {
+            return fetch('/addToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ data })
+                body: JSON.stringify(data)
             })
+                , this._addToCart(data)
         },
 
     },
@@ -41,7 +39,7 @@ Vue.component('goods-list', {
 })
 
 Vue.component('goods-item', {
-    props: ['good', 'getRequest'],
+    props: ['good'],
     template:
         `
       <div class="goods-item" >
@@ -55,13 +53,14 @@ Vue.component('goods-item', {
     `,
     methods: {
         addToCart() {
-            this.$emit('addToCart', this.good)
+            this.$emit('addToCart', this.good);
+
         }
     }
 });
 
 Vue.component('basket-list', {
-    props: ['goods', 'basket', 'makeGETRequest'],
+    props: ['goods', 'basket'],
     template: `
       <div class="basket-list">
         <h3>Корзина</h3>
@@ -75,20 +74,29 @@ Vue.component('basket-list', {
       </div>
     `,
     methods: {
-        deleteFromCart(data) {
+        _deleteFromCart(data) {
             for (el in this.basket) {
                 if (this.basket[el].product_name == data.product_name) {
                     this.basket.splice(el, 1)
-                    console.log(this.basket)
                     break
                 }
             }
-        }
+        },
+        deleteFromCart(data) {
+            return fetch('/delFromCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                , this._deleteFromCart(data)
+        },
     }
 })
 
 Vue.component('basket-item', {
-    props: ['good', 'makeGetRequest'],
+    props: ['good'],
     template: `
       <div class="basket-item">
         <h3>{{ good.product_name }}</h3>

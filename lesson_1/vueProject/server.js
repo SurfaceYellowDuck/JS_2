@@ -13,8 +13,6 @@ app.get('/catalogData', (req, res) => {
         } else {
             res.send(data)
         }
-        // res.send(data);
-
     });
 });
 
@@ -28,17 +26,58 @@ app.get('/cartData', (req, res) => {
     })
 })
 
-app.post('/addToCart', (req, res) => {
-    // reqData = JSON.parse(req.body)
+app.post('/delFromCart', (req, res) => {
     fs.readFile('cart.json', 'utf8', (err, data) => {
         if (err) {
             res.send('{"result": 0}');
         } else {
             const cart = JSON.parse(data);
-            const item = JSON.stringify(req.body);
-            // console.log(item)
+            const item = req.body;
+            for (_item in cart) {
+                if (cart[_item].product_name == item.product_name) {
+                    cart.splice(_item, 1)
+                    fs.writeFile('cart.json', JSON.stringify(cart), (err) => {
+                        if (err) {
+                            res.send('{"result": 0}');
+                            console.log(err)
+                        } else {
+                            res.send('{"result": 1}');
+                        }
+                    });
+                    return
+                }
+            }
+        }
+    })
+})
+
+
+app.post('/addToCart', (req, res) => {
+    fs.readFile('cart.json', 'utf8', (err, data) => {
+        if (err) {
+            res.send('{"result": 0}');
+        } else {
+            const cart = JSON.parse(data);
+            const item = req.body;
+
+            for (_item of cart) {
+                if (_item.product_name == item.product_name) {
+
+                    _item.quantity += 1;
+                    fs.writeFile('cart.json', JSON.stringify(cart), (err) => {
+                        if (err) {
+                            res.send('{"result": 0}');
+                            console.log(err)
+                        } else {
+                            res.send('{"result": 1}');
+                        }
+                    });
+                    return
+                }
+            }
+            item.quantity = 1
             cart.push(item);
-            console.log(cart)
+            // console.log(cart)
             fs.writeFile('cart.json', JSON.stringify(cart), (err) => {
                 if (err) {
                     res.send('{"result": 0}');
