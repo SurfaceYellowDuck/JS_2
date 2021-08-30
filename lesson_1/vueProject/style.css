@@ -1,0 +1,49 @@
+.goods-list{
+    display: flex;
+    justify-content:space-around ;
+}
+
+.goods-item{
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+
+.search-item{
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+
+.basket-goods-item{
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+/* .good-price{
+    text-align: right;
+} */
+
+}
+.basket-item{
+    display: flex;
+    justify-items: left;
+}
+
+.basket-list{
+    padding: 10px;
+    display: flex;
+    justify-content:end ;
+    flex-flow: column;
+}
+
+.basket-item{
+    
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #000;
+}
+
+.basket-delete-button{
+    justify-self: right;
+}
